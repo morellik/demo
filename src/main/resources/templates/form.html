@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:include="fragments/headerinc :: head"></th:block>
+    <style>
+        .error { color: red; font-size: 0.9em; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <form action="#" th:action="@{/fooform}" th:object="${command}" method="post" class="row g-3 needs-validation" novalidate>
+         <div class="col-md-6">
+                <label th:for="textField" class="form-label">Simple Text Field</label>
+                <input type="text" class="form-control" th:field="*{textField}" required />
+             <div class="valid-feedback">
+                 Looks good!
+             </div>
+             <div class="invalid-feedback">
+                 Please choose a username.
+             </div>
+         </div>
+
+        <div class="col-md-6">
+                <label th:for="textareaField" class="form-label">Simple Text Area</label>
+                <textarea  class="form-control" rows="3" th:field="*{textareaField}" required></textarea>
+        </div>
+
+
+        <div class="mb-3">
+            <label th:for="dateField" class="form-label">Date Field</label>
+             <input type="datetime-local" th:field="*{datetimeField}" />
+        </div>
+
+        <div class="mb-3">
+            <label th:for="colorField" class="form-label">Color Field</label>
+             <input type="color" th:field="*{colorField}" />
+        </div>
+        <div>
+            <label th:for="singleCheckboxField" th:text="'Single Checkbox Field:'"></label>
+            <input type="checkbox" th:field="*{singleCheckboxField}" />
+        </div>
+
+        <p>Multi Checkbox Fields:</p>
+        <ul>
+            <li th:each="checkboxValue: ${multiCheckboxAllValues}">
+                <input type="checkbox" th:field="*{multiCheckboxSelectedValues}" th:value="${checkboxValue}" />
+                <label th:for="${#ids.prev('multiCheckboxSelectedValues')}" th:text="${checkboxValue}"></label>
+            </li>
+        </ul>
+
+        <p>Radio Button Fields:</p>
+        <ul>
+            <li th:each="radioValue: ${singleSelectAllValues}">
+                <input type="radio" th:field="*{radioButtonSelectedValue}" th:value="${radioValue}" />
+                <label th:for="${#ids.prev('radioButtonSelectedValue')}" th:text="${radioValue}"></label>
+            </li>
+        </ul>
+
+        <p>Dropdown Field:</p>
+        <select class="form-select" th:field="*{dropdownSelectedValue}">
+            <option th:each="dropdownValue: ${singleSelectAllValues}"
+                    th:value="${dropdownValue}"
+                    th:text="${dropdownValue}" ></option>
+        </select>
+
+        <p><button class="btn btn-primary" type="submit">Submit form</button> </p>
+    </form>
+</div>
+
+</body>
+</html>
